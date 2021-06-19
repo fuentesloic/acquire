@@ -8,8 +8,9 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({})
-export default class Title extends Vue {
-  @Prop({ default: '' }) private card!: string | undefined
+export default class BaseTitle extends Vue {
+  /// Add card class to extend IFF card container
+  @Prop({ default: '' }) private readonly card!: string
 }
 </script>
 

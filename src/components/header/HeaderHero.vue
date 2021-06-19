@@ -2,10 +2,8 @@
   <header :style="backgroundImage(background)">
     <HeaderNav />
 
-    <div class="content">
-      <BaseTitle>{{ title }}</BaseTitle>
-      <BaseSubtitle>{{ subtitle }}</BaseSubtitle>
-    </div>
+    <BaseTitle>{{ title }}</BaseTitle>
+    <BaseSubtitle>{{ subtitle }}</BaseSubtitle>
   </header>
 </template>
 
@@ -34,9 +32,14 @@ import HeaderNav from '@/components/header/HeaderNav.vue'
   }
 })
 export default class HeaderHero extends Vue {
-  @Prop() private background!: string
-  @Prop() private title!: string
-  @Prop() private subtitle!: string
+  /// background image name, limit to png
+  @Prop({ required: true }) private readonly background!: string
+
+  /// title related to the view
+  @Prop({ required: true }) private readonly title!: string
+
+  /// subtitle related to the view
+  @Prop({ required: true }) private readonly subtitle!: string
 }
 </script>
 
@@ -50,18 +53,6 @@ header {
   flex-direction: column;
   height: 44rem;
   padding: 2.75rem 13rem;
-
-  nav {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-
-    img {
-      width: 10rem;
-      height: 3rem;
-      margin: 1.6rem 1.4rem;
-    }
-  }
 
   h1,
   h2 {
