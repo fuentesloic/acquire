@@ -2,8 +2,8 @@
   <main>
     <HeaderHero
       background="hero"
-      title="Jenny’s outfit"
       subtitle="Dress like your idole with this super bundle and be the star you always wanted to be !"
+      title="Jenny’s outfit"
     />
   </main>
 </template>
