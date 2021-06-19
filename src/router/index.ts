@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Products from '../views/Products.vue'
+
+import Shop from '@/views/Shop.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Products',
-    component: Products
+    name: 'Shop',
+    component: Shop
   }
 ]
 

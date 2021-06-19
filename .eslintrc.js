@@ -19,6 +19,7 @@ module.exports = {
   },
   overrides: [
     {
+      excludedFiles: 'node_modules',
       files: [
         "**/__test__/*.{j,t}s?(x)",
         "**/test/unit/**/*.spec.{j,t}s?(x)",
