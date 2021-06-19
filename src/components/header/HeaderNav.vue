@@ -32,7 +32,6 @@ header {
   display: flex;
   flex-direction: column;
   height: 44rem;
-  padding: 2.75rem 13rem;
 
   nav {
     align-items: center;
