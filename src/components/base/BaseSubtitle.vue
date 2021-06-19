@@ -1,5 +1,5 @@
 <template>
-  <h2 :class="{ card: card }">
+  <h2 :class="{ card }">
     <slot>Subtitle</slot>
   </h2>
 </template>
@@ -8,8 +8,9 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component({})
-export default class Subtitle extends Vue {
-  @Prop({ default: '' }) private card!: string | undefined
+export default class BaseSubtitle extends Vue {
+  /// Add card class to extend IFF card container
+  @Prop({ default: '' }) private readonly card!: string
 }
 </script>
 

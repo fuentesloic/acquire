@@ -1,17 +1,25 @@
 <template>
   <nav>
-    <a href="https://www.allbirds.ca/" target="_blank" rel="noopener noreferrer">
-      <img src="@/assets/image/logo.png" alt="Allbirds logo" />
-    </a>
+    <BaseLink href="https://www.allbirds.com/">
+      <img src="@/assets/image/logo.png" alt="Allbirds" />
+    </BaseLink>
 
-    <a href="https://www.allbirds.com/" target="_blank" rel="noopener noreferrer">Visit allbirds.com →</a>
+    <BaseLink href="https://www.allbirds.com/" target="_blank" rel="noopener noreferrer">
+      Visit allbirds.com
+    </BaseLink>
   </nav>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
-@Component({})
+import BaseLink from '@/components/base/BaseLink.vue'
+
+@Component({
+  components: {
+    BaseLink
+  }
+})
 export default class HeaderNav extends Vue {}
 </script>
 
@@ -33,9 +41,8 @@ header {
     margin-bottom: 5.5rem;
 
     img {
-      width: 10rem;
-      height: 3rem;
-      margin: 1.6rem 1.4rem;
+      height: 3.3rem;
+      width: 10.2rem;
     }
   }
 }
