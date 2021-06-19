@@ -1,0 +1,18 @@
+@import "./_reset";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  color: $black;
+  background: $gray-light;
+  font-family: "Public Sans", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  min-height: 100vh;
+}
