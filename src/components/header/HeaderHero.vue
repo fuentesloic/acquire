@@ -1,5 +1,5 @@
 <template>
-  <header :style="backgroundImage(background)">
+  <header :style="getBackgroundImage(background)">
     <HeaderNav />
 
     <BaseTitle>{{ title }}</BaseTitle>
@@ -21,7 +21,7 @@ import HeaderNav from '@/components/header/HeaderNav.vue'
     HeaderNav
   },
   methods: {
-    backgroundImage(background: string) {
+    getBackgroundImage(background: string): Record<'background-image', string> {
       // eslint-disable-next-line
       const image = require(`@/assets/image/${background}.png`)
 
@@ -51,7 +51,7 @@ header {
   background-size: cover;
   display: flex;
   flex-direction: column;
-  padding: 0 13rem;
+  padding: 2.75rem 13rem;
 
   h1,
   h2 {
