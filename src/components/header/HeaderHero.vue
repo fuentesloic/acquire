@@ -51,8 +51,7 @@ header {
   background-size: cover;
   display: flex;
   flex-direction: column;
-  height: 44rem;
-  padding: 2.75rem 13rem;
+  padding: 0 13rem;
 
   h1,
   h2 {
