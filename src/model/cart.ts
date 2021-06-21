@@ -19,10 +19,6 @@ export class ProductCart {
   public quantity: number
   public variant: IVariant
 
-  public set updateQuantity(newQuantity: number) {
-    this.quantity = newQuantity
-  }
-
   constructor(product: IProductCart) {
     this.id = product.id
     this.image = product.image

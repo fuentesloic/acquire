@@ -28,11 +28,11 @@ export class Product {
   public variants: IVariant[]
 
   constructor(product: IProduct) {
-    this.defaultVariantId = product.defaultVariantId ?? '1'
-    this.description = product.description ?? 'Description not available'
-    this.id = product.id ?? 'unknown_id'
-    this.image = product.image ?? ''
-    this.name = product.name ?? 'Name not available'
-    this.variants = product.variants ?? []
+    this.defaultVariantId = product.defaultVariantId
+    this.description = product.description
+    this.id = product.id
+    this.image = product.image
+    this.name = product.name
+    this.variants = product.variants
   }
 }
