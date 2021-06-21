@@ -19,11 +19,7 @@
           <div>
             <BaseButton
               v-for="attributeValue in getVariantAttributeValues(product, attributeName)"
-              :class="[
-                'selector',
-                variantAttributesSelected.find(attribute => attribute.name === attributeName).value ===
-                  attributeValue && 'active'
-              ]"
+              :class="['selector', getSelectedAttribute(attributeName, attributeValue)]"
               :click="() => setVariantSelected(attributeName, attributeValue)"
               :key="attributeName + attributeValue"
             >
@@ -35,7 +31,7 @@
     </section>
 
     <footer>
-      <BaseButton :click="() => null">button submit</BaseButton>
+      <BaseButton :click="() => null">Submit to cart</BaseButton>
     </footer>
   </article>
 </template>
@@ -129,6 +125,13 @@ export default class CardProduct extends Vue {
     })
 
     return new Set(variantAttributeValues)
+  }
+
+  /// Method: retrieve list of attribute for a specific product variant
+  public getSelectedAttribute(attributeName: string, attributeValue: string): string {
+    const attribute = this.variantAttributesSelected.find(attribute => attribute.name === attributeName)
+
+    return attribute && attribute.value === attributeValue ? 'active' : ''
   }
 }
 </script>
