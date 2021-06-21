@@ -11,14 +11,6 @@ export default class BaseImage extends Vue {
   @Prop({ required: true })
   private readonly alt!: string
 
-  /// Prop: Provides image source
-  @Prop({ required: true })
-  private readonly src!: string
-
-  /// Prop: Add product class to extend IFF product container
-  @Prop({ default: '' })
-  private readonly product!: string
-
   /// Prop: Add cart class to extend IFF cart container
   @Prop({ default: '' })
   private readonly cart!: string
@@ -26,6 +18,14 @@ export default class BaseImage extends Vue {
   /// Prop: Add logo class to extend IFF logo
   @Prop({ default: '' })
   private readonly logo!: string
+
+  /// Prop: Add product class to extend IFF product container
+  @Prop({ default: '' })
+  private readonly product!: string
+
+  /// Prop: Provides image source
+  @Prop({ required: true })
+  private readonly src!: string
 
   /// Method: Retrieve the image source according base url
   public getSource(): string {
@@ -37,8 +37,13 @@ export default class BaseImage extends Vue {
 <style lang="scss" scoped>
 img {
   &.card {
-    font-size: 1.8rem;
-    line-height: 2.4rem;
+    height: 30rem;
+    width: 32rem;
+  }
+
+  &.cart {
+    height: 7rem;
+    width: 7rem;
   }
 
   &.logo {

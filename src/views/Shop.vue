@@ -7,15 +7,11 @@
     />
 
     <main>
-      <CardProduct v-for="product in products" :key="product.id" :product="product" />
+      <CardProduct v-for="product in products()" :key="product.id" :product="product" />
     </main>
 
     <aside>
-      <BaseTitle>Product</BaseTitle>
-      <BaseSubtitle>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vel ea ipsa harum, aut debitis quasi
-        nesciunt modi quidem dolor! Ad aliquam numquam expedita odit quas vitae ex illum facere.
-      </BaseSubtitle>
+      <CardCart />
     </aside>
   </div>
 </template>
@@ -25,6 +21,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
 import BaseTitle from '@/components/base/BaseTitle.vue'
+import CardCart from '@/components/card/CardCart.vue'
 import CardProduct from '@/components/card/CardProduct.vue'
 import HeaderHero from '@/components/header/HeaderHero.vue'
 import { Product } from '@/model/product'
@@ -33,27 +30,18 @@ import { Product } from '@/model/product'
   components: {
     BaseSubtitle,
     BaseTitle,
+    CardCart,
     CardProduct,
     HeaderHero
   },
-  computed: {
-    products(): Product[] {
-      return this.$store.state.products
-    }
-  },
-  mounted() {
-    this.$store.dispatch('getProducts')
+  beforeCreate() {
+    this.$store.dispatch('product/getProducts')
   }
 })
 export default class Shop extends Vue {
-  count = 0
-
-  public increment(): void {
-    this.count++
-  }
-
-  public decrement(): void {
-    this.count--
+  /// Computed: provide sync product list
+  products(): Product[] {
+    return this.$store.state.product.products
   }
 }
 </script>
