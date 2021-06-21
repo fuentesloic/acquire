@@ -1,27 +1,35 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
+
+import { IResponseProduct } from '@/model/api'
+import { IProduct, Product } from '@/model/product'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    products: []
+    products: Array<IProduct>()
   },
   getters: {},
   mutations: {
-    setProducts(state, products) {
+    setProducts(state, products: IProduct[]) {
       state.products = products
     }
   },
   actions: {
     getProducts({ commit }) {
-      Vue.axios
-        .get('https://www.npoint.io/docs/ec39ab1aa4edf145235a')
+      axios
+        .get<IResponseProduct>('https://api.npoint.io/ec39ab1aa4edf145235a')
         .then(({ data }) => {
-          console.log(data.products)
-          commit('setProducts', data.products)
+          const products = data.products.map(product => new Product(product)) ?? []
+
+          commit('setProducts', products)
         })
-        .catch(e => console.log(e))
+        .catch(e => {
+          // Handle error message notification
+          console.error(e)
+        })
     }
   }
 })

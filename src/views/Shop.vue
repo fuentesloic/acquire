@@ -7,7 +7,7 @@
     />
 
     <main>
-      <CardProduct v-for="product in products" :key="product.id" />
+      <CardProduct v-for="product in products" :key="product.id" :product="product" />
     </main>
 
     <aside>
@@ -27,6 +27,7 @@ import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
 import BaseTitle from '@/components/base/BaseTitle.vue'
 import CardProduct from '@/components/card/CardProduct.vue'
 import HeaderHero from '@/components/header/HeaderHero.vue'
+import { Product } from '@/model/product'
 
 @Component({
   components: {
@@ -36,7 +37,7 @@ import HeaderHero from '@/components/header/HeaderHero.vue'
     HeaderHero
   },
   computed: {
-    products() {
+    products(): Product[] {
       return this.$store.state.products
     }
   },

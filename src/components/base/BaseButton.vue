@@ -37,8 +37,7 @@ button {
   text-decoration: none;
   transition: 0.25s;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background: $white;
     color: $purple;
   }
@@ -54,13 +53,12 @@ button {
 
     &:hover,
     &:focus {
-      background: $gray-dark;
-      border-color: $gray-dark;
+      background: $black;
+      border-color: $black;
       color: $white;
     }
 
-    &.active,
-    &:active {
+    &.active {
       background: $black;
       border-color: $black;
       color: $white;

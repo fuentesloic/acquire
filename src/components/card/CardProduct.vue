@@ -1,38 +1,34 @@
 <template>
   <article>
     <aside>
-      <BaseImage
-        alt="alt"
-        class="product"
-        src="https://cdn.shopify.com/s/files/1/2804/0750/products/Allbirds_TR_RN_SF_PDP_Kauri_Marine_BTY_991710d1-b6d1-487e-8a4f-49fcb79bf4a9.png?v=1618605577"
-      />
+      <BaseImage class="product" :alt="product.name" :src="product.image" />
     </aside>
 
     <header>
-      <BaseTitle class="product">Product</BaseTitle>
-      <BaseSubtitle class="product">$ 99</BaseSubtitle>
+      <BaseTitle class="product">{{ product.name }}</BaseTitle>
+      <BaseSubtitle class="product">{{ variantSelectedPrice }}</BaseSubtitle>
     </header>
 
-    <BaseParagraph class="product">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vel ea ipsa harum, aut debitis quasi
-      nesciunt modi quidem dolor! Ad aliquam numquam expedita odit quas vitae ex illum facere.
-    </BaseParagraph>
+    <BaseParagraph class="product">{{ product.description }}</BaseParagraph>
 
     <section>
       <ul>
-        <li>
-          <BaseParagraph class="label">Label 1</BaseParagraph>
+        <li v-for="attributeName in getVariantAttributeNames" :key="product.id + attributeName">
+          <BaseParagraph class="label">{{ attributeName }}</BaseParagraph>
 
           <div>
-            <BaseButton class="selector active" :click="() => null">button 1</BaseButton>
-            <BaseButton class="selector" :click="() => null">button 2</BaseButton>
-          </div>
-        </li>
-        <li>
-          <BaseParagraph class="label">Label 2</BaseParagraph>
-          <div>
-            <BaseButton class="selector active" :click="() => null">button 1</BaseButton>
-            <BaseButton class="selector" :click="() => null">button 2</BaseButton>
+            <BaseButton
+              v-for="attributeValue in getVariantAttributeValues(product, attributeName)"
+              :class="[
+                'selector',
+                variantAttributesSelected.find(attribute => attribute.name === attributeName).value ===
+                  attributeValue && 'active'
+              ]"
+              :click="() => setVariantSelected(attributeName, attributeValue)"
+              :key="attributeName + attributeValue"
+            >
+              {{ attributeValue }}
+            </BaseButton>
           </div>
         </li>
       </ul>
@@ -45,13 +41,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import BaseButton from '@/components/base/BaseButton.vue'
 import BaseImage from '@/components/base/BaseImage.vue'
 import BaseParagraph from '@/components/base/BaseParagraph.vue'
 import BaseTitle from '@/components/base/BaseTitle.vue'
 import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
+import { IAttribute, IVariant, Product } from '@/model/product'
 
 @Component({
   components: {
@@ -60,9 +57,79 @@ import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
     BaseParagraph,
     BaseSubtitle,
     BaseTitle
+  },
+  created() {
+    const product: Product = this.$props.product
+    const { defaultVariantId } = product
+
+    this.$data.variantAvailable = product.variants
+    this.$data.variantSelected = product.variants.find(variant => variant.id === defaultVariantId)
+  },
+  methods: {
+    getVariantAttributeValues: (product: Product, variantName: string) => {
+      const variantAttributeValues: string[] = []
+
+      product.variants.forEach(variant => {
+        const variantAttribute = variant.attributes.filter(attribute => attribute.name === variantName)
+        variantAttributeValues.push(variantAttribute[0].value)
+      })
+
+      return new Set(variantAttributeValues)
+    }
   }
 })
-export default class CardProduct extends Vue {}
+export default class CardProduct extends Vue {
+  /// Represent the list of product variant
+  private variantAvailable!: IVariant[]
+
+  /// Represent the current variant selected
+  private variantSelected!: IVariant
+
+  /// Retrieve the price of product according variant selected
+  private get variantSelectedPrice(): string {
+    return `$ ${this.$data.variantSelected.price}`
+  }
+
+  /// Retrieve the attribute's set according variant selected
+  private get variantAttributesSelected(): IAttribute {
+    return this.$data.variantSelected.attributes
+  }
+
+  /// Retrieve the attribute's set according variant selected
+  private get getVariantAttributeNames(): Set<string> {
+    const variantAttributesNames: string[] = []
+    const variants: IVariant[] = this.$data.variantAvailable
+
+    variants.forEach(variant => variant.attributes.forEach(attr => variantAttributesNames.push(attr.name)))
+
+    return new Set(variantAttributesNames)
+  }
+
+  public setVariantSelected(attributeName: string, attributeValue: string): void {
+    const attributesSelected: IAttribute[] = this.$data.variantSelected.attributes
+
+    let currentSize = attributesSelected.find(attribute => attribute.name === 'Size')?.value
+    let currentFabric = attributesSelected.find(attribute => attribute.name === 'Fabric')?.value
+
+    if (attributeName === 'Fabric') {
+      currentFabric = attributeValue
+    } else if (attributeName === 'Size') {
+      currentSize = attributeValue
+    } else {
+      console.error('Attribute name not supported')
+    }
+
+    const variantAvailable: IVariant[] = this.$data.variantAvailable
+    const nextVariant = variantAvailable.find(
+      variant => variant.attributes[0].value === currentSize && variant.attributes[1].value === currentFabric
+    )
+
+    this.$data.variantSelected = nextVariant
+  }
+
+  /// Add product class to extend IFF product container
+  @Prop({ required: true }) private readonly product!: Product
+}
 </script>
 
 <style lang="scss" scoped>
