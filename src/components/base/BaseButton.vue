@@ -88,13 +88,12 @@ button {
   &.cart.selector {
     background: $white;
     border: none;
+    color: $black;
     margin: 0;
     padding: 0.7rem 0.8rem;
 
-    &:hover,
-    &:focus {
+    &:hover {
       background: $gray-light;
-      color: $black;
     }
   }
 }

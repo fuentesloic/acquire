@@ -37,7 +37,13 @@ const mutations = {
       _product => _product.id === product.id && _product.variant.id === product.variant.id
     )
 
-    state.products[productCartIndex].quantity--
+    const isLastItem = state.products[productCartIndex].quantity === 1
+
+    if (isLastItem) {
+      state.products = state.products.filter((_, index) => index !== productCartIndex)
+    } else {
+      state.products[productCartIndex].quantity--
+    }
   }
 }
 
