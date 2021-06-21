@@ -7,7 +7,7 @@
     />
 
     <main>
-      <CardProduct v-for="product in products" :key="product.id" :product="product" />
+      <CardProduct v-for="product in products()" :key="product.id" :product="product" />
     </main>
 
     <aside>
@@ -36,24 +36,14 @@ import { Product } from '@/model/product'
     CardProduct,
     HeaderHero
   },
-  computed: {
-    products(): Product[] {
-      return this.$store.state.products
-    }
-  },
-  mounted() {
+  beforeCreate() {
     this.$store.dispatch('getProducts')
   }
 })
 export default class Shop extends Vue {
-  count = 0
-
-  public increment(): void {
-    this.count++
-  }
-
-  public decrement(): void {
-    this.count--
+  /// Computed: provide product list
+  products(): Product[] {
+    return this.$store.state.products
   }
 }
 </script>
