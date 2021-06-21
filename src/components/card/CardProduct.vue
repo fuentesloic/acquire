@@ -31,7 +31,7 @@
     </section>
 
     <footer>
-      <BaseButton :click="() => null">Submit to cart</BaseButton>
+      <BaseButton :click="() => addProductToCart()">Submit to cart</BaseButton>
     </footer>
   </article>
 </template>
@@ -45,6 +45,7 @@ import BaseParagraph from '@/components/base/BaseParagraph.vue'
 import BaseTitle from '@/components/base/BaseTitle.vue'
 import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
 import { IAttribute, IVariant, Product } from '@/model/product'
+import { IMutationCart } from '@/model/store'
 
 @Component({
   components: {
@@ -93,7 +94,7 @@ export default class CardProduct extends Vue {
     return new Set(variantAttributesNames)
   }
 
-  /// Method: update the current variant selected
+  /// Method: Update the current variant selected
   public setVariantSelected(attributeName: string, attributeValue: string): void {
     const attributesSelected = this.variantSelected?.attributes || []
 
@@ -115,7 +116,7 @@ export default class CardProduct extends Vue {
     if (nextVariant) this.variantSelected = nextVariant
   }
 
-  /// Method: retrieve list of attribute for a specific product variant
+  /// Method: Retrieve list of attribute for a specific product variant
   public getVariantAttributeValues(product: Product, variantName: string): Set<string> {
     const variantAttributeValues: string[] = []
 
@@ -127,11 +128,25 @@ export default class CardProduct extends Vue {
     return new Set(variantAttributeValues)
   }
 
-  /// Method: retrieve list of attribute for a specific product variant
+  /// Method: Retrieve list of attribute for a specific product variant
   public getSelectedAttribute(attributeName: string, attributeValue: string): string {
     const attribute = this.variantAttributesSelected.find(attribute => attribute.name === attributeName)
 
     return attribute && attribute.value === attributeValue ? 'active' : ''
+  }
+
+  /// Method: Update cart store with product
+  public addProductToCart(): void {
+    if (this.variantSelected) {
+      const payload: IMutationCart['addProduct'] = {
+        product: this.product,
+        variantSelected: this.variantSelected
+      }
+      this.$store.commit('cart/addProduct', payload)
+    } else {
+      /// Handle notification
+      console.error('No variant selected')
+    }
   }
 }
 </script>
