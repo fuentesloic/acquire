@@ -12,6 +12,10 @@ export default class BaseSubtitle extends Vue {
   /// Prop: Add product class to extend IFF product container
   @Prop({ default: '' })
   private readonly product!: string
+
+  /// Prop: Add cart class to extend IFF cart container
+  @Prop({ default: '' })
+  private readonly cart!: string
 }
 </script>
 
@@ -24,10 +28,17 @@ h2 {
   line-height: 2.4rem;
   margin-bottom: 0.8rem;
 
-  &.product {
+  &.product,
+  &.cart {
     color: $purple;
     font-size: 1.4rem;
     line-height: 2rem;
+  }
+
+  &.cart.product {
+    color: $gray-dark;
+    font-size: 1.2rem;
+    line-height: 1.7rem;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <button :class="{ selector, active }" @click="click">
+  <button :class="{ active, cart, selector }" @click="click">
     <slot />
   </button>
 </template>
@@ -13,9 +13,13 @@ export default class BaseImage extends Vue {
   @Prop({ default: '' })
   private readonly active!: string
 
+  /// Prop: Add cart class IFF cart component
+  @Prop({ default: '' })
+  private readonly cart!: string
+
   /// Prop: Action trigger on click
   @Prop({ required: true })
-  private click!: void
+  private readonly click!: void
 
   /// Prop: Add selector class IFF selector component
   @Prop({ default: '' })
@@ -40,9 +44,18 @@ button {
   text-decoration: none;
   transition: 0.25s;
 
+  > * {
+    color: inherit;
+  }
+
   &:hover {
     background: $white;
     color: $purple;
+  }
+
+  &.cart {
+    margin: 1rem 0;
+    width: 100%;
   }
 
   &.selector {
@@ -69,6 +82,19 @@ button {
 
     & > * {
       color: $white;
+    }
+  }
+
+  &.cart.selector {
+    background: $white;
+    border: none;
+    margin: 0;
+    padding: 0.7rem 0.8rem;
+
+    &:hover,
+    &:focus {
+      background: $gray-light;
+      color: $black;
     }
   }
 }

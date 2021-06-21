@@ -1,5 +1,5 @@
 <template>
-  <p :class="{ label }">
+  <p :class="{ label, cta }">
     <slot>Paragraph</slot>
   </p>
 </template>
@@ -9,6 +9,10 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class BaseParagraph extends Vue {
+  /// Prop: Add cta class to extend IFF cta container
+  @Prop({ default: '' })
+  private readonly cta!: string
+
   /// Prop: Add label class to extend IFF product container
   @Prop({ default: '' })
   private readonly label!: string
@@ -23,6 +27,12 @@ p {
   font-weight: 400;
   line-height: 2rem;
   margin-bottom: 0.8rem;
+
+  &.cta {
+    color: $black;
+    font-weight: 700;
+    line-height: 1.7rem;
+  }
 
   &.label {
     font-size: 1.2rem;

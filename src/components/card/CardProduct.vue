@@ -13,7 +13,7 @@
 
     <section>
       <ul>
-        <li v-for="attributeName in getVariantAttributeNames" :key="product.id + attributeName">
+        <li v-for="attributeName in variantAttributeNames" :key="product.id + attributeName">
           <BaseParagraph class="label">{{ attributeName }}</BaseParagraph>
 
           <div>
@@ -84,7 +84,7 @@ export default class CardProduct extends Vue {
   }
 
   /// Computed: Retrieve the attribute's set according variant selected
-  private get getVariantAttributeNames(): Set<string> {
+  private get variantAttributeNames(): Set<string> {
     const variantAttributesNames: string[] = []
 
     this.variantAvailable.forEach(variant =>

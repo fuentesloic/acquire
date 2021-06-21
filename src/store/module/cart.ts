@@ -27,8 +27,17 @@ const mutations = {
   }
 }
 
+const getters = {
+  totalPrice: (state: IStateCart): number => {
+    return state.products.reduce((acc, product) => {
+      return product.variant.price * product.quantity + acc
+    }, 0)
+  }
+}
+
 export const cart = {
   namespaced: true,
   state,
-  mutations
+  mutations,
+  getters
 }
