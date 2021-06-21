@@ -24,9 +24,9 @@
 
             <div class="ctas">
               <BaseParagraph class="cta">
-                <BaseButton class="cart selector" :click="() => 'remove 1 qtt'">-</BaseButton>
+                <BaseButton class="cart selector" :click="() => removeProductQtt(product)">-</BaseButton>
                 <span>{{ product.quantity }}</span>
-                <BaseButton class="cart selector" :click="() => 'add 1 qtt'">+</BaseButton>
+                <BaseButton class="cart selector" :click="() => addProductQtt(product)">+</BaseButton>
               </BaseParagraph>
 
               <BaseParagraph class="cta">$ {{ product.variant.price }}</BaseParagraph>
@@ -36,7 +36,9 @@
       </ul>
     </section>
 
-    <footer>Powered by Acquire</footer>
+    <footer>
+      <BaseParagraph>Powered by Acquire</BaseParagraph>
+    </footer>
   </article>
 </template>
 
@@ -51,6 +53,7 @@ import BaseParagraph from '@/components/base/BaseParagraph.vue'
 import BaseTitle from '@/components/base/BaseTitle.vue'
 import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
 import { ProductCart } from '@/model/cart'
+import { IMutationCart } from '@/model/store'
 
 @Component({
   components: {
@@ -69,6 +72,20 @@ export default class CardProduct extends Vue {
   /// Computed: provide sync product list
   products(): ProductCart[] {
     return this.$store.state.cart.products
+  }
+
+  /// Method: Add product quantity
+  public addProductQtt(product: ProductCart): void {
+    const payload: IMutationCart['addProductQtt'] = { product }
+
+    this.$store.commit('cart/addProductQtt', payload)
+  }
+
+  /// Method: Remove product quantity, will remove it IFF qtt === 0
+  public removeProductQtt(product: ProductCart): void {
+    const payload: IMutationCart['removeProductQtt'] = { product }
+
+    this.$store.commit('cart/removeProductQtt', payload)
   }
 }
 </script>

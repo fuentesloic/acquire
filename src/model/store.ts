@@ -14,4 +14,10 @@ export interface IMutationCart {
     product: IProduct
     variantSelected: IVariant
   }
+  addProductQtt: {
+    product: ProductCart
+  }
+  removeProductQtt: {
+    product: ProductCart
+  }
 }

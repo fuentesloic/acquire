@@ -24,6 +24,20 @@ const mutations = {
     } else {
       state.products[productCartIndex].quantity++
     }
+  },
+  addProductQtt(state: IStateCart, { product }: IMutationCart['addProductQtt']): void {
+    const productCartIndex = state.products.findIndex(
+      _product => _product.id === product.id && _product.variant.id === product.variant.id
+    )
+
+    state.products[productCartIndex].quantity++
+  },
+  removeProductQtt(state: IStateCart, { product }: IMutationCart['addProductQtt']): void {
+    const productCartIndex = state.products.findIndex(
+      _product => _product.id === product.id && _product.variant.id === product.variant.id
+    )
+
+    state.products[productCartIndex].quantity--
   }
 }
 
