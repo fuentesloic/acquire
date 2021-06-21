@@ -37,13 +37,13 @@ import { Product } from '@/model/product'
     HeaderHero
   },
   beforeCreate() {
-    this.$store.dispatch('getProducts')
+    this.$store.dispatch('product/getProducts')
   }
 })
 export default class Shop extends Vue {
-  /// Computed: provide product list
+  /// Computed: provide sync product list
   products(): Product[] {
-    return this.$store.state.products
+    return this.$store.state.product.products
   }
 }
 </script>
