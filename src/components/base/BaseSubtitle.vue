@@ -7,10 +7,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component
 export default class BaseSubtitle extends Vue {
-  /// Add product class to extend IFF product container
-  @Prop({ default: '' }) private readonly product!: string
+  /// Prop: Add product class to extend IFF product container
+  @Prop({ default: '' })
+  private readonly product!: string
 }
 </script>
 

@@ -57,56 +57,49 @@ import { IAttribute, IVariant, Product } from '@/model/product'
     BaseParagraph,
     BaseSubtitle,
     BaseTitle
-  },
-  created() {
-    const product: Product = this.$props.product
-    const { defaultVariantId } = product
-
-    this.$data.variantAvailable = product.variants
-    this.$data.variantSelected = product.variants.find(variant => variant.id === defaultVariantId)
-  },
-  methods: {
-    getVariantAttributeValues: (product: Product, variantName: string) => {
-      const variantAttributeValues: string[] = []
-
-      product.variants.forEach(variant => {
-        const variantAttribute = variant.attributes.filter(attribute => attribute.name === variantName)
-        variantAttributeValues.push(variantAttribute[0].value)
-      })
-
-      return new Set(variantAttributeValues)
-    }
   }
 })
 export default class CardProduct extends Vue {
-  /// Represent the list of product variant
-  private variantAvailable!: IVariant[]
+  /// Prop: Add product class to extend IFF product container
+  @Prop({ required: true })
+  private readonly product!: Product
 
-  /// Represent the current variant selected
-  private variantSelected!: IVariant
+  /// Data: Represent the list of product variant
+  variantAvailable: IVariant[] = this.product.variants
 
-  /// Retrieve the price of product according variant selected
+  /// Data: Represent the current variant selected
+  variantSelected: IVariant | undefined = this.product.variants.find(
+    variant => variant.id === this.product.defaultVariantId
+  )
+
+  /// Computed: Retrieve the price of product according variant selected
   private get variantSelectedPrice(): string {
-    return `$ ${this.$data.variantSelected.price}`
+    const { variantSelected } = this
+
+    return variantSelected ? `$ ${variantSelected.price}` : 'Contact support'
   }
 
-  /// Retrieve the attribute's set according variant selected
-  private get variantAttributesSelected(): IAttribute {
-    return this.$data.variantSelected.attributes
+  /// Computed: Retrieve the attributes set according variant selected
+  private get variantAttributesSelected(): IAttribute[] {
+    const { variantSelected } = this
+
+    return variantSelected ? variantSelected.attributes : []
   }
 
-  /// Retrieve the attribute's set according variant selected
+  /// Computed: Retrieve the attribute's set according variant selected
   private get getVariantAttributeNames(): Set<string> {
     const variantAttributesNames: string[] = []
-    const variants: IVariant[] = this.$data.variantAvailable
 
-    variants.forEach(variant => variant.attributes.forEach(attr => variantAttributesNames.push(attr.name)))
+    this.variantAvailable.forEach(variant =>
+      variant.attributes.forEach(attr => variantAttributesNames.push(attr.name))
+    )
 
     return new Set(variantAttributesNames)
   }
 
+  /// Method: update the current variant selected
   public setVariantSelected(attributeName: string, attributeValue: string): void {
-    const attributesSelected: IAttribute[] = this.$data.variantSelected.attributes
+    const attributesSelected = this.variantSelected?.attributes || []
 
     let currentSize = attributesSelected.find(attribute => attribute.name === 'Size')?.value
     let currentFabric = attributesSelected.find(attribute => attribute.name === 'Fabric')?.value
@@ -119,16 +112,24 @@ export default class CardProduct extends Vue {
       console.error('Attribute name not supported')
     }
 
-    const variantAvailable: IVariant[] = this.$data.variantAvailable
-    const nextVariant = variantAvailable.find(
+    const nextVariant = this.variantAvailable.find(
       variant => variant.attributes[0].value === currentSize && variant.attributes[1].value === currentFabric
     )
 
-    this.$data.variantSelected = nextVariant
+    if (nextVariant) this.variantSelected = nextVariant
   }
 
-  /// Add product class to extend IFF product container
-  @Prop({ required: true }) private readonly product!: Product
+  /// Method: retrieve list of attribute for a specific product variant
+  public getVariantAttributeValues(product: Product, variantName: string): Set<string> {
+    const variantAttributeValues: string[] = []
+
+    product.variants.forEach(variant => {
+      const variantAttribute = variant.attributes.filter(attribute => attribute.name === variantName)
+      variantAttributeValues.push(variantAttribute[0].value)
+    })
+
+    return new Set(variantAttributeValues)
+  }
 }
 </script>
 

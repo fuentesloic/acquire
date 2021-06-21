@@ -45,7 +45,17 @@ import { Product } from '@/model/product'
     this.$store.dispatch('getProducts')
   }
 })
-export default class Shop extends Vue {}
+export default class Shop extends Vue {
+  count = 0
+
+  public increment(): void {
+    this.count++
+  }
+
+  public decrement(): void {
+    this.count--
+  }
+}
 </script>
 
 <style lang="scss" scoped>

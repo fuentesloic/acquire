@@ -7,10 +7,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component
 export default class BaseParagraph extends Vue {
-  /// Add label class to extend IFF product container
-  @Prop({ default: '' }) private readonly label!: string
+  /// Prop: Add label class to extend IFF product container
+  @Prop({ default: '' })
+  private readonly label!: string
 }
 </script>
 

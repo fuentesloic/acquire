@@ -1,32 +1,36 @@
 <template>
-  <img :alt="alt" :src="getSource(src)" :class="{ cart, logo, product }" />
+  <img :alt="alt" :src="getSource()" :class="{ cart, logo, product }" />
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({
-  methods: {
-    getSource(src: string): string {
-      return src.includes('@/assets/image') ? require(src) : src
-    }
-  }
-})
+@Component
 export default class BaseImage extends Vue {
-  /// Provides fallback text to display when the image not loaded
-  @Prop({ required: true }) private readonly alt!: string
+  /// Prop: Provides fallback text to display when the image not loaded
+  @Prop({ required: true })
+  private readonly alt!: string
 
-  /// Provides image source
-  @Prop({ required: true }) private readonly src!: string
+  /// Prop: Provides image source
+  @Prop({ required: true })
+  private readonly src!: string
 
-  /// Add product class to extend IFF product container
-  @Prop({ default: '' }) private readonly product!: string
+  /// Prop: Add product class to extend IFF product container
+  @Prop({ default: '' })
+  private readonly product!: string
 
-  /// Add cart class to extend IFF cart container
-  @Prop({ default: '' }) private readonly cart!: string
+  /// Prop: Add cart class to extend IFF cart container
+  @Prop({ default: '' })
+  private readonly cart!: string
 
-  /// Add logo class to extend IFF logo
-  @Prop({ default: '' }) private readonly logo!: string
+  /// Prop: Add logo class to extend IFF logo
+  @Prop({ default: '' })
+  private readonly logo!: string
+
+  /// Method: Retrieve the image source according base url
+  public getSource(): string {
+    return this.src.includes('@/assets/image') ? require(this.src) : this.src
+  }
 }
 </script>
 

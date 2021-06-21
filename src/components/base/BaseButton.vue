@@ -7,16 +7,19 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component
 export default class BaseImage extends Vue {
-  /// Add active class IFF selector component is active
-  @Prop({ default: '' }) private readonly active!: string
+  /// Prop: Add active class IFF selector component is active
+  @Prop({ default: '' })
+  private readonly active!: string
 
-  /// Action trigger on click
-  @Prop({ required: true }) private click!: void
+  /// Prop: Action trigger on click
+  @Prop({ required: true })
+  private click!: void
 
-  /// Add selector class IFF selector component
-  @Prop({ default: '' }) private readonly selector!: string
+  /// Prop: Add selector class IFF selector component
+  @Prop({ default: '' })
+  private readonly selector!: string
 }
 </script>
 
