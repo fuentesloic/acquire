@@ -1,5 +1,5 @@
 <template>
-  <h1 :class="{ card: card }">
+  <h1 :class="{ product }">
     <slot>Title</slot>
   </h1>
 </template>
@@ -7,10 +7,11 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component
 export default class BaseTitle extends Vue {
-  /// Add card class to extend IFF card container
-  @Prop({ default: '' }) private readonly card!: string
+  /// Prop: Add product class to extend IFF product container
+  @Prop({ default: '' })
+  private readonly product!: string
 }
 </script>
 
@@ -21,9 +22,9 @@ h1 {
   font-weight: 700;
   font-size: 6.4rem;
   line-height: 7.5rem;
-  margin: 1.6rem 0;
+  margin-bottom: 0.8rem;
 
-  &.card {
+  &.product {
     font-size: 1.8rem;
     line-height: 2.4rem;
   }

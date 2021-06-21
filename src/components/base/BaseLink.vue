@@ -7,15 +7,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component
 export default class BaseLink extends Vue {
-  /// Set the target attribute
-  /// https://developer.mozilla.org/fr/docs/Web/HTML/Element/a#attr-target
-  @Prop({ default: '_self' }) private readonly target!: string
+  /// Prop: Define the target attribute
+  @Prop({ default: '_self' })
+  private readonly target!: string
 
-  /// Set the rel attribute
-  /// https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel
-  @Prop({ default: '' }) private readonly rel!: string
+  /// Prop: Define the rel attribute
+  @Prop({ default: '' })
+  private readonly rel!: string
 }
 </script>
 

@@ -1,6 +1,7 @@
 <template>
   <nav>
     <BaseLink href="https://www.allbirds.com/">
+      <BaseImage class="logo" src="@/assets/image/logo.png" alt="Allbirds" />
       <img src="@/assets/image/logo.png" alt="Allbirds" />
     </BaseLink>
 
@@ -13,10 +14,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
+import BaseImage from '@/components/base/BaseImage.vue'
 import BaseLink from '@/components/base/BaseLink.vue'
 
 @Component({
   components: {
+    BaseImage,
     BaseLink
   }
 })

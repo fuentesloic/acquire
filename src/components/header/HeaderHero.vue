@@ -1,5 +1,5 @@
 <template>
-  <header :style="backgroundImage(background)">
+  <header :style="getBackgroundImage()">
     <HeaderNav />
 
     <BaseTitle>{{ title }}</BaseTitle>
@@ -19,27 +19,30 @@ import HeaderNav from '@/components/header/HeaderNav.vue'
     BaseSubtitle,
     BaseTitle,
     HeaderNav
-  },
-  methods: {
-    backgroundImage(background: string) {
-      // eslint-disable-next-line
-      const image = require(`@/assets/image/${background}.png`)
-
-      return {
-        'background-image': `url(${image})`
-      }
-    }
   }
 })
 export default class HeaderHero extends Vue {
-  /// background image name, limit to png
-  @Prop({ required: true }) private readonly background!: string
+  /// Prop: background image name, limit to png
+  @Prop({ required: true })
+  private readonly background!: string
 
-  /// title related to the view
-  @Prop({ required: true }) private readonly title!: string
+  /// Prop: title related to the view
+  @Prop({ required: true })
+  private readonly title!: string
 
-  /// subtitle related to the view
-  @Prop({ required: true }) private readonly subtitle!: string
+  /// Prop: subtitle related to the view
+  @Prop({ required: true })
+  private readonly subtitle!: string
+
+  /// Method: retrieve the image background according image name
+  public getBackgroundImage(): Record<'background-image', string> {
+    // eslint-disable-next-line
+    const image = require(`@/assets/image/${this.background}.png`)
+
+    return {
+      'background-image': `url(${image})`
+    }
+  }
 }
 </script>
 
@@ -51,7 +54,7 @@ header {
   background-size: cover;
   display: flex;
   flex-direction: column;
-  padding: 0 13rem;
+  padding: 2.75rem 13rem;
 
   h1,
   h2 {

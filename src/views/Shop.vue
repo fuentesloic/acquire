@@ -7,14 +7,15 @@
     />
 
     <main>
-      <CardContainer />
-      <CardContainer />
-      <CardContainer />
-      <CardContainer />
+      <CardProduct v-for="product in products" :key="product.id" :product="product" />
     </main>
 
     <aside>
-      <CardContainer />
+      <BaseTitle>Product</BaseTitle>
+      <BaseSubtitle>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vel ea ipsa harum, aut debitis quasi
+        nesciunt modi quidem dolor! Ad aliquam numquam expedita odit quas vitae ex illum facere.
+      </BaseSubtitle>
     </aside>
   </div>
 </template>
@@ -22,34 +23,58 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-import CardContainer from '@/components/card/CardContainer.vue'
+import BaseSubtitle from '@/components/base/BaseSubtitle.vue'
+import BaseTitle from '@/components/base/BaseTitle.vue'
+import CardProduct from '@/components/card/CardProduct.vue'
 import HeaderHero from '@/components/header/HeaderHero.vue'
+import { Product } from '@/model/product'
 
 @Component({
   components: {
-    CardContainer,
+    BaseSubtitle,
+    BaseTitle,
+    CardProduct,
     HeaderHero
+  },
+  computed: {
+    products(): Product[] {
+      return this.$store.state.products
+    }
+  },
+  mounted() {
+    this.$store.dispatch('getProducts')
   }
 })
-export default class Shop extends Vue {}
+export default class Shop extends Vue {
+  count = 0
+
+  public increment(): void {
+    this.count++
+  }
+
+  public decrement(): void {
+    this.count--
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .grid {
   display: grid;
   grid-template-columns: 13rem 2fr 2rem 1fr 13rem;
-  grid-template-rows: 2.75rem 32rem 12rem auto;
+  grid-template-rows: 32.2rem 11.8rem auto;
 
   & > header {
-    grid-area: 1 / 1 / 4 / 6;
+    grid-area: 1 / 1 / 3 / 6;
   }
 
   & > main {
-    grid-area: 3 / 2 / 5 / 3;
+    grid-area: 2 / 2 / 5 / 3;
   }
 
   & > aside {
-    grid-area: 3 / 4 / 3 / 5;
+    grid-area: 2 / 4 / 3 / 5;
+    background: white;
   }
 }
 </style>
