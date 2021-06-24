@@ -8,12 +8,12 @@
       </BaseButton>
     </header>
 
-    <section v-if="products().length">
+    <section>
       <BaseDivider />
       <BaseTitle class="cart">Your cart</BaseTitle>
 
-      <ul>
-        <li v-for="product in products()" :key="product.id">
+      <ul v-if="products().length">
+        <li v-for="product in products()" :key="`cart_product_${product.name}_${product.variant.name}`">
           <figure>
             <BaseImage class="cart" :alt="product.name" :src="product.image" />
           </figure>
@@ -34,6 +34,8 @@
           </figcaption>
         </li>
       </ul>
+
+      <BaseParagraph v-else>Your cart is empty, add your first item!</BaseParagraph>
     </section>
 
     <footer>
@@ -68,7 +70,7 @@ import { IMutationCart } from '@/model/store'
     ...mapGetters('cart', { totalPrice: 'totalPrice' })
   }
 })
-export default class CardProduct extends Vue {
+export default class CardCart extends Vue {
   /// Computed: provide sync product list
   products(): ProductCart[] {
     return this.$store.state.cart.products

@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components - Card - CardCart renders without crashing 1`] = `
+<article products="">
+  <header>
+    <basetitle-stub product="" cart="" class="cart">Welcome back Sarah !</basetitle-stub>
+    <baseparagraph-stub cta="" label="" class="cart">Nice to see you again!</baseparagraph-stub>
+    <basebutton-stub active="" cart="" click="[Function]" selector="" class="cart">
+      pay $
+    </basebutton-stub>
+  </header>
+  <section>
+    <basedivider-stub></basedivider-stub>
+    <basetitle-stub product="" cart="" class="cart">Your cart</basetitle-stub>
+    <ul>
+      <li>
+        <figure>
+          <baseimage-stub alt="product_name_one" cart="" logo="" product="" src="product_image_one" class="cart"></baseimage-stub>
+        </figure>
+        <figcaption>
+          <basetitle-stub product="" cart="" class="cart product">product_name_one</basetitle-stub>
+          <basesubtitle-stub product="" cart="" class="cart product">variant_name_one</basesubtitle-stub>
+          <div class="ctas">
+            <baseparagraph-stub cta="" label="" class="cta">
+              <basebutton-stub active="" cart="" click="[Function]" selector="" class="cart selector">-</basebutton-stub> <span>4</span>
+              <basebutton-stub active="" cart="" click="[Function]" selector="" class="cart selector">+</basebutton-stub>
+            </baseparagraph-stub>
+            <baseparagraph-stub cta="" label="" class="cta">$ 42</baseparagraph-stub>
+          </div>
+        </figcaption>
+      </li>
+      <li>
+        <figure>
+          <baseimage-stub alt="product_name_two" cart="" logo="" product="" src="product_image_two" class="cart"></baseimage-stub>
+        </figure>
+        <figcaption>
+          <basetitle-stub product="" cart="" class="cart product">product_name_two</basetitle-stub>
+          <basesubtitle-stub product="" cart="" class="cart product">variant_name_two</basesubtitle-stub>
+          <div class="ctas">
+            <baseparagraph-stub cta="" label="" class="cta">
+              <basebutton-stub active="" cart="" click="[Function]" selector="" class="cart selector">-</basebutton-stub> <span>2</span>
+              <basebutton-stub active="" cart="" click="[Function]" selector="" class="cart selector">+</basebutton-stub>
+            </baseparagraph-stub>
+            <baseparagraph-stub cta="" label="" class="cta">$ 42</baseparagraph-stub>
+          </div>
+        </figcaption>
+      </li>
+    </ul>
+  </section>
+  <footer>
+    <baseparagraph-stub cta="" label="">Powered by Acquire</baseparagraph-stub>
+  </footer>
+</article>
+`;

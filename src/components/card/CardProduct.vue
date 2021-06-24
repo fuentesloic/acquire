@@ -13,7 +13,7 @@
 
     <section>
       <ul>
-        <li v-for="attributeName in variantAttributeNames" :key="product.id + attributeName">
+        <li v-for="attributeName in variantAttributeNames" :key="`product_${product.id}_${attributeName}`">
           <BaseParagraph class="label">{{ attributeName }}</BaseParagraph>
 
           <div>
@@ -21,7 +21,7 @@
               v-for="attributeValue in getVariantAttributeValues(product, attributeName)"
               :class="['selector', getSelectedAttribute(attributeName, attributeValue)]"
               :click="() => setVariantSelected(attributeName, attributeValue)"
-              :key="attributeName + attributeValue"
+              :key="`product_${product.id}_${attributeName}_${attributeValue}`"
             >
               {{ attributeValue }}
             </BaseButton>
@@ -62,7 +62,7 @@ export default class CardProduct extends Vue {
   private readonly product!: Product
 
   /// Data: Represent the list of product variant
-  variantAvailable: IVariant[] = this.product.variants
+  readonly variantAvailable: IVariant[] = this.product.variants
 
   /// Data: Represent the current variant selected
   variantSelected: IVariant | undefined = this.product.variants.find(
@@ -96,24 +96,51 @@ export default class CardProduct extends Vue {
 
   /// Method: Update the current variant selected
   public setVariantSelected(attributeName: string, attributeValue: string): void {
-    const attributesSelected = this.variantSelected?.attributes || []
+    const _variantSelected = this.variantSelected
 
-    let currentSize = attributesSelected.find(attribute => attribute.name === 'Size')?.value
-    let currentFabric = attributesSelected.find(attribute => attribute.name === 'Fabric')?.value
+    // Generate desired set of attributes selected
+    if (_variantSelected) {
+      const existingNextAttributes = _variantSelected.attributes
+        .filter(attribute => attribute.name !== attributeName)
+        .map(attribute => {
+          return {
+            name: attribute.name,
+            value: attribute.value
+          }
+        })
 
-    if (attributeName === 'Fabric') {
-      currentFabric = attributeValue
-    } else if (attributeName === 'Size') {
-      currentSize = attributeValue
+      const nextVariantAttributes = [
+        ...existingNextAttributes,
+        {
+          name: attributeName,
+          value: attributeValue
+        }
+      ].sort((a, b) => {
+        const _a = a.name.toUpperCase()
+        const _b = b.name.toUpperCase()
+
+        if (_a > _b) return -1
+        if (_a < _b) return 1
+
+        return 0
+      })
+
+      // Serialize array for lazy comparaison
+      const _variantAttributesDesired = JSON.stringify(nextVariantAttributes)
+      const _variantAttributesAvailable = this.variantAvailable.map(variant =>
+        JSON.stringify(variant.attributes)
+      )
+
+      // Find variant id from set of attribute desired
+      const nextVariantIndex = _variantAttributesAvailable.findIndex(
+        attributes => attributes === _variantAttributesDesired
+      )
+
+      this.variantSelected = this.variantAvailable[nextVariantIndex]
     } else {
-      console.error('Attribute name not supported')
+      /// Handle notification
+      console.error('No default variant, contact support')
     }
-
-    const nextVariant = this.variantAvailable.find(
-      variant => variant.attributes[0].value === currentSize && variant.attributes[1].value === currentFabric
-    )
-
-    if (nextVariant) this.variantSelected = nextVariant
   }
 
   /// Method: Retrieve list of attribute for a specific product variant

@@ -7,7 +7,7 @@
     />
 
     <main>
-      <CardProduct v-for="product in products()" :key="product.id" :product="product" />
+      <CardProduct v-for="product in products()" :key="`product_id_${product.id}`" :product="product" />
     </main>
 
     <aside>
