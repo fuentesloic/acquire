@@ -35,7 +35,7 @@
         </li>
       </ul>
 
-      <BaseParagraph>Your cart is empty, add your first item!</BaseParagraph>
+      <BaseParagraph v-else>Your cart is empty, add your first item!</BaseParagraph>
     </section>
 
     <footer>
@@ -70,7 +70,7 @@ import { IMutationCart } from '@/model/store'
     ...mapGetters('cart', { totalPrice: 'totalPrice' })
   }
 })
-export default class CardProduct extends Vue {
+export default class CardCart extends Vue {
   /// Computed: provide sync product list
   products(): ProductCart[] {
     return this.$store.state.cart.products

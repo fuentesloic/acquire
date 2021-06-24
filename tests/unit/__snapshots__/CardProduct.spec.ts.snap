@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components - Card - CardProduct renders without crashing 1`] = `
+<article>
+  <aside>
+    <baseimage-stub alt="product_name_one" cart="" logo="" product="" src="product_image_one" class="product"></baseimage-stub>
+  </aside>
+  <header>
+    <basetitle-stub product="" cart="" class="product">product_name_one</basetitle-stub>
+    <basesubtitle-stub product="" cart="" class="product">42</basesubtitle-stub>
+  </header>
+  <baseparagraph-stub cta="" label="" class="product">product_description_one</baseparagraph-stub>
+  <section>
+    <ul>
+      <li>
+        <baseparagraph-stub cta="" label="" class="label">attribute_name_one</baseparagraph-stub>
+        <div>
+          <basebutton-stub active="" cart="" click="[Function]" selector="" class="selector attribute_name_one">
+            attribute_value_one
+          </basebutton-stub>
+          <basebutton-stub active="" cart="" click="[Function]" selector="" class="selector attribute_name_one">
+            attribute_value_two
+          </basebutton-stub>
+        </div>
+      </li>
+      <li>
+        <baseparagraph-stub cta="" label="" class="label">attribute_name_two</baseparagraph-stub>
+        <div>
+          <basebutton-stub active="" cart="" click="[Function]" selector="" class="selector attribute_name_two">
+            attribute_value_one
+          </basebutton-stub>
+          <basebutton-stub active="" cart="" click="[Function]" selector="" class="selector attribute_name_two">
+            attribute_value_two
+          </basebutton-stub>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <footer>
+    <basebutton-stub active="" cart="" click="[Function]" selector="">Submit to cart</basebutton-stub>
+  </footer>
+</article>
+`;
